@@ -1,10 +1,12 @@
 <?php
-
+	
 if (isset ($_POST['table_name'])) {
-$table_name = $_POST['table_name'];
 require_once 'connection.php'; 
 $link = mysqli_connect($host, $user, $password, $database) ;
-$query ='SELECT * FROM ' . 'console';
+$query ="SELECT * FROM console INNER JOIN placement ON console.placement=placement.PlacementID INNER JOIN video ON console.video=video.VideoID";
+
+
+
 $result = mysqli_query($link, $query); 
 
 	if($result)
@@ -22,14 +24,19 @@ $result = mysqli_query($link, $query);
 		foreach ($response as $key) {
 
 		 $html .= 
-		 '<li><b>Статус: </b>' . $key['']. '</li>' . 
 		 '<li><b> Приставка: </b>' . $key['name'] . ' ' . $key['model'] . '</li>' . 
-		 '<li><b>Расположение: </b>' . $key['placement'] . '</li>' .
-		 '<li><b>Тип: </b>' . $key['placement'] . '</li>' .
-		 '<li><b>Видео: </b>' . $key['placement'] . '</li><hr>'  
+		 '<li><b>Статус: </b>' . '<font color="green">' . $key['status']. '</font></li>' .  
+		 '<li><b>Расположение: </b>' . $key['placement_name'] . '</li>' .
+		 '<li><b>Тип: </b>' . $key['type'] . '</li>' .
+		 '<li><b>Видео: </b>' . $key['VideoName'] . ' <a href="#">link</a>' .'</li><hr>' 
+
 		 ;
+		
 		}
 
+		$html .= '</ul>';
+
+		
 		echo $html;
     
   }   

@@ -12,10 +12,10 @@
 	
 
 	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
+	
 	<script type="text/javascript">
 
-	$(document).on('click', '#button1', function() {
+	$(document).on('click', '#ShowAll', function() {
 
 		var table_name = $('#table_name').val();
 
@@ -31,22 +31,36 @@
   
 	</script> 
 
+	<!-- <script type="text/javascript">
+
+	$(document).on('click', '#button2', function() {
+
+		var table_name = $('#table_name').val();
+
+		$.ajax({
+				method: 'POST',
+				url: 'functions.php',
+				data: { table_name: table_name},
+				success: function(response){
+					$('#table').html(response);
+				}
+			}); 
+		});
+  
+	</script> 
+ -->
 	</head>
 
 	<body>
 
 	 <nav style="background-color: black" class="navbar navbar-expand-lg navbar-dark">
 			<div class="container">
-				<a class="navbar-brand" href="#">Tv Box: Control center </a>
+				<a class="navbar-brand" href="#">Tv Box: Control center</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.php">HELP</a>
-						</li>
-
 						<li class="nav-item active">
 							<a class="nav-link" href="#">LOG OUT</a>
 						</li>
@@ -66,25 +80,81 @@
 				<h5>Проверить приставку</h5><hr>
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
-						<label class="input-group-text" for="inputGroupSelect01">Приставка</label>
+						<label class="input-group-text" for="inputGroupSelect01">ТВ Приставка</label>
 					</div>
-					<select class="custom-select" id="inputGroupSelect01">
+				
+					<select name="select" class="custom-select" id="inputGroupSelect01">
 						<option selected>Выберите...</option>
-						<option value="1">Sony B130</option>
-						<option value="2">XIAOMI 	MI TV BOX 3</option>
-						<option value="3">Rombica	Cinema 4k v02</option>
-						<option value="4">iconBIT	PC-0035W</option>
-						<option value="5">Supra	SDT-67</option>
+						<option id="1" value="1">Sony B130</option>
+						<option value="2">XIAOMI MI TV BOX 3</option>
+						<option value="3">Rombica Cinema 4k v02</option>
+						<option value="4">iconBIT PC-0035W</option>
+						<option value="5">Supra	SDT-67</option>	
 					</select>
 				</div>
+			
+
+			<div name="table_name" id="table_name"> </div>
+			
+			<button id="button2" type="button" class="btn btn-primary">Выбрать</button> ИЛИ
+
+			<button id="ShowAll" type="button" class="btn btn-outline-primary">Проверить все приставки</button>
+
+			<Br>
+			<Br>
+			<Br>
+			<Br>
+			<Br>
+			<h5>Добавить приставку</h5><hr>
+
+<!-- 			<div class="input-group input-group-default mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-default">Марка</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>
+			<div class="input-group input-group-default mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-default">Модель</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="inputGroupSelect01">Расположение</label>
+			  </div>
+			  <select class="custom-select" id="inputGroupSelect01">
+			    <option selected>Выберите</option>
+			    <option value="1">Омега</option>
+			    <option value="2">Торговый квартал</option>
+			    <option value="3">Сити Молл</option>
+			    <option value="4">Sunrise</option>
+			    <option value="5">Палитра</option>
+			  </select>
+			</div>
+			<div class="input-group input-group-default mb-3">
+			  <div class="input-group-prepend">
+			    <span class="input-group-text" id="inputGroup-sizing-default">Видео (URL)</span>
+			  </div>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>
+			<button id="Add" type="button" class="btn btn-primary">Добавить</button>
+ -->
 
 
-			<input name="table_name" id="table_name"> 
-			<button id="button1">Показать все приставки</button>
+			<form method="POST" action="add.php">
+			
+			Марка<br><input type="text" name="name"/><br>
+			Модель<br><input type="text" name="model"/><br><br>
+			<input type="submit" name="add" value="добавить" />
 
+			</form>
 
 
 			</div>
+
+
+
 
 			<div class="col-md-1">
 					
@@ -92,13 +162,7 @@
 
 			<div class="col-md-7">
 				<h5>Информация</h5><hr>
-				<ul class="list-unstyled">
-					<li><b>Статус: </b><font color="green">Работает</font></li>
-					<li><b>Приставка: </b>Sony B130</li>
-					<li><b>Место: </b> Тц Омега</li>
-					<li><b>Тип: </b>Торговый центр</li>
-					<li><b>Видео: </b>Реклама вискаса</li>
-				</ul>
+
 
 			<div id="table"></div>
 			

@@ -150,8 +150,8 @@
 			  <div class="input-group-prepend">
 			    <label class="input-group-text" for="inputGroupSelect01">Место</label>
 			  </div>
-			  <select name="placement" class="custom-select" id="inputGroupSelect01">
-			    <option selected>Выберите</option>
+			  <select required name="placement" class="custom-select" id="inputGroupSelect01">
+			    <option selected disabled value="">Выберите</option>
 			    <option value="1">Омега</option>
 			    <option value="2">Торговый квартал</option>
 			    <option value="3">Сити Молл</option>
@@ -160,23 +160,34 @@
 			  </select>
 			</div>
 
-			<div class="input-group mb-3">
+			<!-- <div class="input-group mb-3">
 			  <div class="input-group-prepend">
 			    <label class="input-group-text" for="inputGroupSelect01">Статус</label>
 			  </div>
-			  <select name="status" class="custom-select" id="inputGroupSelect01">
-			    <option selected>Выберите</option>
-			    <option value="Online">Online</option>
-			    <option value="Offline">Offline</option>
+			  <select name="" class="custom-select" id="inputGroupSelect01">
+			    <option selected disabled value="">Выберите</option>
+			    <option value="Работает">Включена</option>
+			    <option value="Не работает">Выключена</option>
 			  </select>
 			</div>
-
+ -->
 			<div class="input-group input-group-default mb-3">
 			  <div class="input-group-prepend">
 			    <span class="input-group-text" id="inputGroup-sizing-default">Видео</span>
 			  </div>
-			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			  <input name="video" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 			</div>
+
+				
+				 
+			<span class="switch">
+				<input name="status" type="checkbox" class="switch" id="switch-id">
+				<label for="switch-id">Включить приставку</label>
+			</span>
+
+                   <br>
+  
+
 			<input value="Добавить" type="submit" name="add" id="Add" type="button" class="btn btn-primary"/>
  
 	</form>
@@ -199,43 +210,44 @@
 
 
 			<div id="table"></div>
-			<?php
-require_once 'connection.php';
-if(isset($_GET['id']))
-{   
-    $link = mysqli_connect($host, $user, $password, $database) 
-            or die("Ошибка " . mysqli_error($link)); 
-    $id = mysqli_real_escape_string($link, $_GET['id']);
-     
-    $query ="DELETE FROM console WHERE ConsoleID = '$id'";
-    echo '<div class="alert alert-success" role="alert">
-  Приставка успешно удалена!
-</div>';
- 
-    $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
-    mysqli_close($link);
-}
-?>
-				<!-- Сюда приходят данные от ajax -->
 
 <?php
+	require_once 'connection.php';
+
+	 //Удаление записей
+	if(isset($_GET['id']))
+	{   
+	    $link = mysqli_connect($host, $user, $password, $database) 
+	            or die("Ошибка " . mysqli_error($link)); 
+	    $id = mysqli_real_escape_string($link, $_GET['id']);
+	     
+	    $query ="DELETE FROM console WHERE ConsoleID = '$id'";
+	    echo '<div class="alert alert-success" role="alert">
+	  Приставка успешно удалена!
+	</div>';
 	 
-	 if(isset($_POST['add'])){
-	$mysqli = new mysqli ("project.local", "root", "root", "tvbox");
-	$mysqli->query ("SET NAMES 'utf-8'");
+	    $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link)); 
+	    mysqli_close($link);
+	}
 
-	$name = $_POST['name'];
-	$model = $_POST['model'];
-	$placement = $_POST['placement'];
-	$time = $_POST['time'];
-	$date = $_POST['date'];
-	$status = $_POST['status'];
-	$video = $_POST['video'];
-	// $status = 'Ok';
-	// $video = 'URL';
+	 //Добавление записей
+	if(isset($_POST['add']) && ($_POST['status'])){
+		$mysqli = new mysqli ("project.local", "root", "root", "tvbox");
+		
 
-	$success = $mysqli->query ("INSERT INTO `console` (`name`, `model`, `placement`, `status`, `video`, `time`, `date`) VALUES ('$name', '$model', '$placement', '$status', '1', '$time', '$date')");
+		$name = strip_tags($_POST['name']);
+		$model = strip_tags($_POST['model']);
+		$placement = $_POST['placement'];
+		$time = $_POST['time'];
+		$date = $_POST['date'];
+		$status = '<font color="green">Работает</font>';
+		$video_link = strip_tags($_POST['video']);
+		
+		$success = $mysqli->query ("INSERT INTO `console` (`name`, `model`, `placement`, `status`, `video`, `time`, `date`) VALUES ('$name', '$model', '$placement', '$status', '1', '$time', '$date')");
 
+		$success2 = $mysqli->query ("INSERT INTO `video` (`VideoLink`) VALUES ('$video_link')");
+
+		
 	$ok = 'Приставка успешно добавлена!';
 	
  echo '<div class="alert alert-success" role="alert">' . $ok . '</div>';
@@ -244,13 +256,36 @@ if(isset($_GET['id']))
 
 }
 
+
+if(isset($_POST['add']) && (!$_POST['status'])){
+		$mysqli = new mysqli ("project.local", "root", "root", "tvbox");
+		
+
+		$name = strip_tags($_POST['name']);
+		$model = strip_tags($_POST['model']);
+		$placement = $_POST['placement'];
+		$time = $_POST['time'];
+		$date = $_POST['date'];
+		$status2 = '<font color="red">Не работает</font>';
+		$video_link = strip_tags($_POST['video']);
+		
+		$success = $mysqli->query ("INSERT INTO `console` (`name`, `model`, `placement`, `status`, `video`, `time`, `date`) VALUES ('$name', '$model', '$placement', '$status2', '1', '$time', '$date')");
+
+		$success2 = $mysqli->query ("INSERT INTO `video` (`VideoLink`) VALUES ('$video_link')");
+
+		
+	$ok = 'Приставка успешно добавлена!';
+	
+ echo '<div class="alert alert-success" role="alert">' . $ok . '</div>';
+
+
+
+}
 ?>
 
 			</div>
 	
 		</div>  
-
-	
 
 
 

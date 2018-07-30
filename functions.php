@@ -1,16 +1,10 @@
-
-
-
 <?php
-	
 
 if (isset ($_POST['table_name'])) {
 $select = $_POST['select'];
 require_once 'connection.php'; 
 $link = mysqli_connect($host, $user, $password, $database) ;
 $query ="SELECT * FROM console INNER JOIN placement ON console.placement=placement.PlacementID INNER JOIN video ON console.video=video.VideoID ORDER BY ConsoleID DESC";
-
-//
 
 $result = mysqli_query($link, $query); 
 
@@ -29,12 +23,12 @@ $result = mysqli_query($link, $query);
 	<div class="row">
 		<div class="col-md-9">
 	<ul class="list-unstyled">
-		 <li><b> Приставка: </b><?php echo $key['name'] ?> <?php echo $key['model'] ?></li>
-		 <li><b> id приставки: </b> <?php echo $key['ConsoleID'] ?> </li> 
-		 <li><b>Статус: </b><font color="green"><?php echo $key['status'] ?></font></li> 
+		 <li><b>Приставка: </b><?php echo $key['name'] ?> <?php echo $key['model'] ?></li>
+		 <li><b>id приставки: </b> <?php echo $key['ConsoleID'] ?> </li> 
+		 <li><b>Статус: </b><?php echo $key['status'] ?></li> 
 		 <li><b>Расположение: </b><?php echo $key['placement_name'] ?></li>
 		 <li><b>Тип: </b><?php echo $key['type'] ?></li>
-		 <li><b>Видео: </b><?php echo $key['VideoName'] ?> <a href="#">link</a></li>
+		 <li><b>Видео: </b><?php echo $key['VideoLink'] ?> <font color="blue">Смотреть</font></a></li>
 		 <li><b>Дата добавления приставки: </b><?php echo $key['date'] ?> <?php echo $key['time'] ?></li></ul>
 		 
 	</ul>
@@ -55,10 +49,6 @@ $result = mysqli_query($link, $query);
   		echo '<h2>Приставка не найдена!</h2>';
   	}	
 }
-
-
-	$id = $_GET['ConsoleID'];
-	//mysql_query("DELETE FROM console WHERE ConsoleID='$id'");
 
 
 ?>

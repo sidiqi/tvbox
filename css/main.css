@@ -1,0 +1,25 @@
+	a {
+		text-decoration: none; 
+		color: white;
+	}
+
+	a:hover {
+		text-decoration: none; 
+		color: white;
+	}
+	
+	.btn1 {
+		width: 100px!important;
+		border-radius: 0px;
+		margin: 2px!important;
+	}
+
+	.btn1 {
+		
+		border-radius: 0px;
+		
+	}
+
+	.input-group-text {
+		width: 90px!important;
+	}

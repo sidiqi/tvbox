@@ -1,3 +1,39 @@
+<?php
+
+require_once 'db/connection.php'; 
+$id = $_GET['id'];
+$link = mysqli_connect($host, $user, $password, $database) ;
+$query ="SELECT * FROM console INNER JOIN placement ON console.placement=placement.PlacementID 		 WHERE ConsoleID = '$id' ORDER BY ConsoleID DESC";
+
+$result = mysqli_query($link, $query); 
+
+		
+	while ($row = $result->fetch_assoc()) {
+			
+		$response[] = $row;	
+	}
+
+	foreach ($response as $key) { 
+
+	}
+  
+	if(isset($_POST['save'])){
+
+		$name = strip_tags($_POST['name']);
+		$model = strip_tags($_POST['model']);
+		$placement = $_POST['placement'];
+		$time = $_POST['time'];
+		$date = $_POST['date'];
+		$video_link = strip_tags($_POST['video']);
+
+		$success_eddit = $mysqli->query ("UPDATE `console` SET name='$name', model='$model', placement='1', status='on', video='$video_link' WHERE ConsoleID = '$id'");
+
+
+		$edit_result = '<div class="alert alert-success" role="alert">Приставка отредактирована!</div>';
+
+	}
+
+?>
 <!doctype html>
 <html lang="en">
 	<head>
@@ -11,22 +47,6 @@
 		<link rel="stylesheet" href="css/main.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	
-		<script type="text/javascript">
-		$(document).on('click', '#ShowAll', function() {
-
-			var table_name = $('#table_name').val();
-
-			$.ajax({
-					method: 'POST',
-					url: 'functions.php',
-					data: { table_name: table_name},
-					success: function(response){
-						$('#table').html(response);
-					}
-				}); 
-			});
-		</script> 
- 
 	</head>
 
 	<body>
@@ -46,48 +66,31 @@
 				</div>
 			</div>
 		</nav>
-
-
-
+	
+			
 <div class="container">
-		<h2><font color="white">Приставка</font></h2>
+	<div class="row">
+	<div class="col-md-3"></div>
 
-		<div class="row">
+		<div class="col-md-6" style="padding-top: 5%">
+				<h5>Редактировать приставку</h5><hr>
 			
-			<div class="col-md-4">
-				<h5>Найти приставку</h5><hr>
-				<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Введите название" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <div class="input-group-append">
-	<button class="btn btn-primary" type="button" id="button-addon2">Поиск</button>
-  </div>
-</div>
-			
+				<?php echo $edit_result; ?>
 
-			<div name="table_name" id="table_name"> </div>
-				
-			<button id="ShowAll" type="button" class="btn btn-outline-primary">Показать все приставки</button>
-
-			
-			<br>
-			<br>
-			<br>
-			<h5>Добавить приставку</h5><hr>
-
-
-	<form method="POST" action="index.php">
+			<div id="table"></div>
+					<form method="POST" action="eddit.php?id=<?php echo $id; ?>">
 			<div class="input-group input-group-default mb-3">
 			  <div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Марка</span>
 			  </div>
-			  <input name="name" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+			  <input name="name" value="<?php echo $key['name']; ?>" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
 			</div>
 
 			<div class="input-group input-group-default mb-3">
 			  <div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Модель</span>
 			  </div>
-			  <input name="model" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			  <input value="<?php echo $key['model']; ?>" name="model" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 			</div>
 
 			<input type="hidden" name="time" value=" <?php echo date('H:i');?> " />
@@ -98,7 +101,7 @@
 				<label class="input-group-text" for="inputGroupSelect01">Место</label>
 			  </div>
 			  <select required name="placement" class="custom-select" id="inputGroupSelect01">
-				<option selected disabled value="">Выберите</option>
+				<option selected value="value="<?php echo $key['placement']; ?>"><?php echo $key['placement']; ?></option>
 				<option value="1">Омега</option>
 				<option value="2">Торговый квартал</option>
 				<option value="3">Сити Молл</option>
@@ -112,7 +115,7 @@
 			  <div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Видео</span>
 			  </div>
-			  <input required name="video" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			  <input value="<?php echo $key['video']; ?>" required name="video" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 			</div>
 
 				
@@ -125,35 +128,14 @@
 				   <br>
   
 
-			<input value="Добавить" type="submit" name="add" id="Add" type="button" class="btn btn-primary"/>
+			<input value="Сохранить" type="submit" id="edit" name="save" type="button" class="btn btn-primary"/>
  
 	</form>
-
-
-
-
-
-			</div>
-
-
-
-
-			<div class="col-md-1">
-					
-			</div>
-
-			<div class="col-md-7">
-				<h5>Информация</h5><hr>
-
-
-			<div id="table"></div>
-	
-<?php require_once 'functions2.php';?>
 			</div>
 	
 		</div>  
 
-
+</div>
 
 
 		<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

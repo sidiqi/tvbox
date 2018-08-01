@@ -10,72 +10,67 @@
 		<title>Tv Box: control center</title>
 		<link rel="stylesheet" href="css/main.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script src="search.js"></script>
 	
 		<script type="text/javascript">
-		$(document).on('click', '#ShowAll', function() {
+			$(document).on('click', '#ShowAll', function() {
 
-			var table_name = $('#table_name').val();
+				var table_name = $('#table_name').val();
 
-			$.ajax({
-					method: 'POST',
-					url: 'functions.php',
-					data: { table_name: table_name},
-					success: function(response){
-						$('#table').html(response);
-					}
-				}); 
-			});
+				$.ajax({
+						method: 'POST',
+						url: 'functions.php',
+						data: { table_name: table_name},
+						success: function(response){
+							$('#table').html(response);
+						}
+					}); 
+				});
 		</script> 
+
+	
  
 	</head>
 
 	<body>
 
-	 <nav style="background-color: black" class="navbar navbar-expand-lg navbar-dark">
-			<div class="container">
-				<a class="navbar-brand" href="index.php">Tv Box: Control center</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="">LOG OUT</a>
-						</li>
-					</ul>
-				</div>
+	<nav style="background-color: black" class="navbar navbar-expand-lg navbar-dark">
+		<div class="container">
+			<a class="navbar-brand" href="index.php">Tv Box: Control center</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="">LOG OUT</a>
+					</li>
+				</ul>
 			</div>
-		</nav>
+		</div>
+	</nav>
+	
 
 
-
-<div class="container">
-		<h2><font color="white">Приставка</font></h2>
-
-		<div class="row">
-			
+	<div class="container" style="padding-top: 3%">
+		<div class="row">	
 			<div class="col-md-4">
-				<h5>Найти приставку</h5><hr>
+				<h2>Найти приставку</h2><hr>
 				<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Введите название" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <div class="input-group-append">
-	<button class="btn btn-primary" type="button" id="button-addon2">Поиск</button>
-  </div>
-</div>
-			
+				<input type="text" name="referal" placeholder="Начните вводить, например, Sony ..." value="" class="who form-control"  autocomplete="off"/>
+				</div>
+				<div style="margin-top: "><small class="text-muted"><i> Если Вы не нашли приставку, воспользуйтесь кнопкой "Показать все приставки"</i></small></div><br>
+				<button class="btn btn-outline-primary" type="button" id="ShowAll">Показать все приставки</button>
 
-			<div name="table_name" id="table_name"> </div>
+				<div name="table_name" id="table_name"></div>
 				
-			<button id="ShowAll" type="button" class="btn btn-outline-primary">Показать все приставки</button>
-
+				
 			
 			<br>
-			<br>
-			<br>
-			<h5>Добавить приставку</h5><hr>
+			<h2>Добавить приставку</h2><hr>
 
 
-	<form method="POST" action="index.php">
+		<form method="POST" action="index.php">
 			<div class="input-group input-group-default mb-3">
 			  <div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Марка</span>
@@ -107,51 +102,49 @@
 			  </select>
 			</div>
 
-
 			<div class="input-group input-group-default mb-3">
 			  <div class="input-group-prepend">
-				<span class="input-group-text" id="inputGroup-sizing-default">Видео</span>
+				<span class="input-group-text" id="inputGroup-sizing-default">Видео url</span>
 			  </div>
-			  <input required name="video" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-			</div>
-
-				
+			  <input required value="https://youtu.be/dQw4w9WgXcQ" name="video" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+			</div>				
 				 
-			<span class="switch">
+				 
+			<div class="row"> <div class="col-md-8" style="padding-top: 5px!important">
+			<span  class="switch switch-sm">
 				<input name="status" type="checkbox" class="switch" id="switch-id">
 				<label for="switch-id">Включить приставку</label>
-			</span>
-
+			</span></div>
 				   <br>
-  
-
+				   <br>
+<div class="col-md-4">
 			<input value="Добавить" type="submit" name="add" id="Add" type="button" class="btn btn-primary"/>
- 
-	</form>
+
+				</div>
+				</div>
+				
+		</form>
+
+	</div>
 
 
+		<div class="col-md-1"></div>
+
+		<div class="col-md-7">
+			<h2>Информация</h2><hr>
+			<div id="table"></div> <!-- Ajax show all -->
+			<div class="search_result"></div><!-- Ajax search -->
+			
 
 
-
-			</div>
-
-
-
-
-			<div class="col-md-1">
-					
-			</div>
-
-			<div class="col-md-7">
-				<h5>Информация</h5><hr>
-
-
-			<div id="table"></div>
 	
-<?php require_once 'functions2.php';?>
-			</div>
-	
-		</div>  
+
+
+			
+			<?php require_once 'functions2.php';?>
+
+		</div>
+	</div>  
 
 
 

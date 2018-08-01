@@ -29,14 +29,15 @@ $result = mysqli_query($link, $query);
 		 <li><b>Статус: </b><?php echo $key['status'] ?></li> 
 		 <li><b>Расположение: </b><?php echo $key['placement_name'] ?></li>
 		 <li><b>Тип: </b><?php echo $key['type'] ?></li>
-		 <li><b>Видео: </b><?php echo $key['video'] ?></li>
+		 <li><b>Видео: </b><a href="<?php echo $key['video'] ?>"><font color="blue"><?php echo $key['video'] ?></font></a></li>
 		 <li><b>Дата добавления приставки: </b><?php echo $key['date'] ?> <?php echo $key['time'] ?></li></ul>
 		
 	</ul>
 	</div>
 	<div class="col-md-3">
-		<button type="button" class="btn btn1 btn-sm btn-danger"><a href="index.php?id=<?php echo $key['ConsoleID']?>">Удалить</a></button>
-		<button type="button" class="btn btn1 btn-sm btn-success"><a href="eddit.php?id=<?php echo $key['ConsoleID']?>">Изменить</a></button>
+		<button  onclick="location.href = 'edit.php?id=<?php echo $key['ConsoleID']?>'" type="button" class="btn btn1 btn-sm btn-primary"><a href="edit.php?id=<?php echo $key['ConsoleID']?>">Изменить</a></button>
+		<button onclick="location.href = 'index.php?id=<?php echo $key['ConsoleID']?>'" type="button" class="btn btn1 btn-sm btn-danger"><a href="index.php?id=<?php echo $key['ConsoleID']?>">Удалить</a></button>
+		
 	</div>
 
 	</div>

@@ -59,8 +59,6 @@ require_once 'db/connection.php';
 
 }
 
-
-		//Редактирование данных
 ?>
 
 
